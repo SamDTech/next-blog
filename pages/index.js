@@ -1,6 +1,26 @@
 import Head from "next/head";
 import Link from "next/link";
-import { blogPosts } from '../lib/data';
+import { format, parseISO } from "date-fns";
+import { blogPosts } from "../lib/data";
+
+const BlogListItem = ({ title, date, content, slug }) => {
+  return (
+    <div
+      key={slug}
+      className="border border-gray-100 shadow hover:shadow-md hover:border-black-200 rounded-md p-4 transition duration-200 ease-in"
+    >
+      <div>
+        <Link href={`/blog/${slug}`}>
+          <a className="font-bold">{title}</a>
+        </Link>
+      </div>
+      <div className="text-gray-500 text-xs">
+        {format(parseISO(date), "MMMM do, uuu")}
+      </div>
+      <div>{content}</div>
+    </div>
+  );
+};
 
 export default function Home() {
   return (
@@ -10,21 +30,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <h1>My Blog </h1>
-      </main>
-
-      <div>
+      <div className="space-y-4">
         {blogPosts.map((post) => (
-          <div key={post.slug}>
-            <div>
-              <Link href={`/blog/${post.slug}`}>
-                <a>{post.title}</a>
-              </Link>
-            </div>
-            <div>{post.date.toString()}</div>
-            <div>{post.content}</div>
-          </div>
+          <BlogListItem key={post.slug} {...post} />
         ))}
       </div>
     </div>
