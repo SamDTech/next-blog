@@ -17,7 +17,7 @@ const BlogListItem = ({ title, date, content, slug }) => {
       <div className="text-gray-500 text-xs">
         {format(parseISO(date), "MMMM do, uuu")}
       </div>
-      <div>{content}</div>
+      <div>{content.substr(0, 300)}</div>
     </div>
   );
 };
